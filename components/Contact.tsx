@@ -1,30 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import github from "../public/assets/github.png";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
+ const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
   });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
-  };
+    setStatus("loading");
 
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+ if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 4000);
+      } else if (res.status === 429) {
+        setStatus("error");
+        alert("Too many messages sent. Please wait an hour before trying again.");
+        setTimeout(() => setStatus("idle"), 4000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 4000);
+      }
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
+  };
   return (
     <section id="contact" className="py-12 relative">
-      {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-950/20 to-transparent pointer-events-none"></div>
       
       <div className="max-w-6xl mx-auto px-4 relative z-10">
@@ -36,20 +58,17 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          {/* Left: Contact Info */}
           <div>
             <h3 className="text-xl font-bold text-white mb-2">Let's Talk</h3>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed max-w-lg">
               I'm always interested in hearing about new projects and opportunities. Feel free to reach out!
             </p>
 
-            {/* Contact Details */}
             <div className="space-y-4 mb-8">
               <div className="group flex items-start gap-3 cursor-pointer">
                 <div className="w-10 h-10 bg-red-600/20 border border-red-500/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/30 group-hover:border-red-500/50 transition-all group-hover:shadow-lg group-hover:shadow-red-600/20">
-                  <span className="text-lg">📧</span>
+                  <Mail className="w-5 h-5 text-red-400" />
                 </div>
                 <div>
                   <p className="font-bold text-white text-sm">Email</p>
@@ -61,7 +80,7 @@ export default function Contact() {
 
               <div className="group flex items-start gap-3 cursor-pointer">
                 <div className="w-10 h-10 bg-red-600/20 border border-red-500/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/30 group-hover:border-red-500/50 transition-all group-hover:shadow-lg group-hover:shadow-red-600/20">
-                  <span className="text-lg">📱</span>
+                  <Phone className="w-5 h-5 text-red-400" />
                 </div>
                 <div>
                   <p className="font-bold text-white text-sm">Phone</p>
@@ -73,7 +92,7 @@ export default function Contact() {
 
               <div className="group flex items-start gap-3 cursor-pointer">
                 <div className="w-10 h-10 bg-red-600/20 border border-red-500/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/30 group-hover:border-red-500/50 transition-all group-hover:shadow-lg group-hover:shadow-red-600/20">
-                  <span className="text-lg">📍</span>
+                  <MapPin className="w-5 h-5 text-red-400" />
                 </div>
                 <div>
                   <p className="font-bold text-white text-sm">Location</p>
@@ -82,31 +101,31 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Social Links - Facebook & GitHub Only */}
             <div className="flex gap-3">
-              {/* Facebook */}
               <a 
                 href="https://facebook.com/francis.quiambao.125958" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-11 h-11 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-gray-400 hover:bg-gradient-to-br hover:from-blue-600 hover:to-blue-500 hover:text-white hover:border-transparent transition-all hover:shadow-lg hover:shadow-blue-600/30"
               >
-                <span className="text-2xl font-bold">f</span>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+</svg>
               </a>
 
-              {/* GitHub */}
               <a 
                 href="https://github.com/Xav0929" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group w-11 h-11 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-gray-400 hover:bg-gradient-to-br hover:from-gray-700 hover:to-black hover:text-white hover:border-transparent transition-all hover:shadow-lg hover:shadow-gray-600/30"
               >
-              
+               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+</svg>
               </a>
             </div>
           </div>
 
-          {/* Right: Contact Form - Unchanged */}
           <div className="p-6 bg-gradient-to-br from-white/8 to-white/3 border border-white/10 rounded-lg backdrop-blur-xl hover:border-red-500/30 transition-all hover:shadow-lg hover:shadow-red-600/20">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -159,10 +178,32 @@ export default function Contact() {
 
               <div className="pt-1">
                 <button
-                  type="submit"
-                  className="w-full px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-red-600/50 hover:scale-105 transition-all duration-300 text-sm"
+                  type="submit" className={`w-full px-4 py-2 bg-gradient-to-r text-white font-bold rounded-lg transition-all duration-300 text-sm ${
+                    status === "success"
+                      ? "from-green-600 to-green-500"
+                      : status === "error"
+                      ? "from-gray-600 to-gray-500"
+                      : "from-red-600 to-red-500 hover:shadow-lg hover:shadow-red-600/50 hover:scale-105"
+                  }`}
+                  disabled={status === "loading" || status === "success"}
                 >
-                  Send Message
+                 {status === "loading" ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : status === "success" ? (
+                    <span className="flex items-center justify-center gap-2">
+                      ✓ Message Sent!
+                    </span>
+                  ) : status === "error" ? (
+                    <span>Failed. Try again.</span>
+                  ) : (
+                    <span>Send Message</span>
+                  )}
                 </button>
               </div>
             </form>
