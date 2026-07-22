@@ -27,7 +27,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      await res.json(); 
  if (res.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
