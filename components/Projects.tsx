@@ -64,7 +64,20 @@ export default function Projects() {
 
         {/* Carousel */}
         <div className="relative">
-          <div className="overflow-hidden"> <div className="relative flex items-center justify-center" style={{ height: "520px" }}>              {projects.map((project, index) => {
+          <div className="overflow-hidden" 
+            onTouchStart={(e) => {
+              const touch = e.touches[0];
+              (e.currentTarget as any)._touchStartX = touch.clientX;
+            }}
+            onTouchEnd={(e) => {
+              const startX = (e.currentTarget as any)._touchStartX;
+              const endX = e.changedTouches[0].clientX;
+              const diff = startX - endX;
+              if (Math.abs(diff) > 50) {
+                diff > 0 ? next() : prev();
+              }
+            }}
+          > <div className="relative flex items-center justify-center" style={{ height: "520px" }}>              {projects.map((project, index) => {
                 const total = projects.length;
                 let offset = index - current;
                 if (offset > total / 2) offset -= total;
@@ -157,13 +170,13 @@ export default function Projects() {
           {/* Arrows */}
           <button
             onClick={prev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-red-600 border border-white/10 rounded-full flex items-center justify-center transition-all text-xl"
+            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-red-600 border border-white/10 rounded-full items-center justify-center transition-all text-xl"
           >
             ‹
           </button>
           <button
             onClick={next}
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-red-600 border border-white/10 rounded-full flex items-center justify-center transition-all text-xl"
+            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-red-600 border border-white/10 rounded-full items-center justify-center transition-all text-xl"
           >
             ›
           </button>
