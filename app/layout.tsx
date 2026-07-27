@@ -3,6 +3,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Francis Tonzo | Full-Stack Developer Portfolio",
+  icons: {
+    icon: "/logo.png",
+  },
   description: "Francis Tonzo — IT Student and aspiring Full-Stack Developer. Explore my projects, skills, and get in touch.",
   keywords: "Francis Tonzo, Full-Stack Developer, IT Student, Portfolio, Web Developer, JavaScript, PHP, MongoDB",
   authors: [{ name: "Francis Tonzo" }],
