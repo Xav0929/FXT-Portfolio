@@ -60,13 +60,13 @@ export default function Hero() {
             <div className="flex flex-wrap gap-6 sm:gap-8 pt-6 border-t border-white/10">
               <div>
                 <div className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-red-500 to-red-400 bg-clip-text text-transparent">
-                  5+
+                  4+
                 </div>
                 <p className="text-xs text-gray-400 mt-1 font-medium">Projects Completed</p>
               </div>
               <div>
                 <div className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-red-500 to-red-400 bg-clip-text text-transparent">
-                  2+
+                  4+
                 </div>
                 <p className="text-xs text-gray-400 mt-1 font-medium">Years Experience</p>
               </div>
