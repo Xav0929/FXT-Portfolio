@@ -72,23 +72,23 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
                 <div>
                   <p className="font-bold text-white text-sm">Email</p>
-                  <a href="mailto:francis@example.com" className="text-red-400 hover:text-red-300 font-semibold transition-colors text-xs">
-                    francis@example.com
+                  <a href="mailto:francistonzo5@gmail.com" className="text-red-400 hover:text-red-300 font-semibold transition-colors text-xs">
+                    francistonzo5@gmail.com
                   </a>
                 </div>
               </div>
 
-              <div className="group flex items-start gap-3 cursor-pointer">
+              {/* <div className="group flex items-start gap-3 cursor-pointer">
                 <div className="w-10 h-10 bg-red-600/20 border border-red-500/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/30 group-hover:border-red-500/50 transition-all group-hover:shadow-lg group-hover:shadow-red-600/20">
                   <Phone className="w-5 h-5 text-red-400" />
                 </div>
-                <div>
+                {/* <div>
                   <p className="font-bold text-white text-sm">Phone</p>
                   <a href="tel:+1234567890" className="text-red-400 hover:text-red-300 font-semibold transition-colors text-xs">
                     +1 (234) 567-890
                   </a>
-                </div>
-              </div>
+                </div> 
+              </div> */}
 
               <div className="group flex items-start gap-3 cursor-pointer">
                 <div className="w-10 h-10 bg-red-600/20 border border-red-500/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-red-600/30 group-hover:border-red-500/50 transition-all group-hover:shadow-lg group-hover:shadow-red-600/20">
@@ -96,7 +96,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
                 <div>
                   <p className="font-bold text-white text-sm">Location</p>
-                  <p className="text-gray-400 font-medium text-xs">Your City, Your Country</p>
+                  <p className="text-gray-400 font-medium text-xs">San Jose Tarlac, Philippines</p>
                 </div>
               </div>
             </div>
