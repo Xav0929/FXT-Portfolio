@@ -54,7 +54,7 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="/resume.pdf" download="Tonzo_OJT_Resume.pdf" className="text-sm font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-500 hover:to-red-400 transition-all">
+            <a href="/resume.pdf" download="Resume.pdf" className="text-sm font-semibold px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-white hover:from-red-500 hover:to-red-400 transition-all">
               Download CV
             </a>
           </li>
@@ -80,7 +80,7 @@ export default function Navbar() {
           <a href="#education" className="block py-2 text-gray-300 hover:text-white font-semibold transition-colors text-sm">Education</a>
           <a href="#certifications" className="block py-2 text-gray-300 hover:text-white font-semibold transition-colors text-sm">Certifications</a>
           <a href="#contact" className="block py-2 text-gray-300 hover:text-white font-semibold transition-colors text-sm">Contact</a>
-          <a href="/resume.pdf" download="Tonzo_OJT_Resume.pdf" className="block py-2 text-red-400 hover:text-red-300 font-semibold transition-colors text-sm">Download CV</a>
+          <a href="/resume.pdf" download="Resume.pdf" className="block py-2 text-red-400 hover:text-red-300 font-semibold transition-colors text-sm">Download CV</a>
         </div>
       )}
     </nav>
