@@ -4,6 +4,7 @@ import hksamms from '@/assets/Hksamms.png';
 import SHM from '@/assets/SHM.png';
 import vet from '@/assets/vetplus.png';
 import Shoepreme from '@/assets/Shoepreme.png';
+import citScheduler from '@/assets/CITScheduler.png';
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -18,6 +19,14 @@ export default function Projects() {
     gradient: "from-orange-500 to-yellow-600",
     liveDemo: "https://www.shoepreme-k.com/",
   },
+    {
+      title: "CIT Scheduler",
+      description: "A web-based scheduling system built as our capstone project, developed with a teammate. The backend runs on Render with MongoDB Atlas, and the frontend is deployed on Vercel.",
+      tech: ["Node.js", "Vue.js", "MongoDB", "Render", "Vercel"],
+      image: citScheduler,
+      gradient: "from-red-500 to-red-600",
+      liveDemo: "https://www.citscheduler.com/",
+    },
     {
       title: "HK-SAMMS",
       description: "A scheduling system for HK Scholars of PHINMA Araullo University that automates duty assignments, minimizes scheduling conflicts, and improves schedule management and accessibility.",
@@ -92,7 +101,7 @@ export default function Projects() {
                   <div
                     key={index}
                     onClick={() => isActive ? setSelectedProject(project) : setCurrent(index)}
-               className="absolute transition-all duration-500 cursor-pointer w-[85vw] sm:w-80 md:w-96"                   style={{
+               className={`absolute transition-all duration-500 cursor-pointer w-[85vw] sm:w-80 md:w-96 ${isActive ? "" : "hidden sm:block"}`}                   style={{
                       transform: isActive
                         ? "translateX(0%) scale(1)"
                        : isLeft
@@ -101,7 +110,7 @@ export default function Projects() {
                         : "translateX(0%) scale(0.7)",
                       opacity: isActive ? 1 : isVisible ? 0.45 : 0,
                       zIndex: isActive ? 10 : isVisible ? 5 : 0,pointerEvents: isVisible ? "auto" : "none",
-                      display: !isActive && typeof window !== "undefined" && window.innerWidth < 640 ? "none" : undefined,
+                      
                     }}
                   >
                     <article className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl">
