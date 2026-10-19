@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT = 2;           // max 2 emails
@@ -33,27 +38,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "All fields are required." }, { status: 400 });
     }
 
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
-      },
-    });
-
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER,
+    const { error } = await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: "francistonzo5@gmail.com",
       replyTo: email,
       subject: `Portfolio Contact: ${name}`,
       html: `
         <h3>New message from your portfolio</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p>${escapeHtml(message)}</p>
       `,
     });
+
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json({ message: "Failed to send email." }, { status: 500 });
+    }
 
     return NextResponse.json({ message: "Email sent successfully." }, { status: 200 });
   } catch (error) {
